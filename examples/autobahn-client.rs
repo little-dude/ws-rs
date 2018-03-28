@@ -8,7 +8,7 @@ use ws::{connect, CloseCode, Message, Result};
 #[cfg(feature = "permessage-deflate")]
 use ws::deflate::DeflateHandler;
 
-const AGENT: &'static str = "WS-RS";
+const AGENT: &str = "WS-RS";
 
 #[cfg(not(feature = "permessage-deflate"))]
 fn main() {
@@ -59,9 +59,7 @@ fn get_case_count() -> Result<u32> {
 
         move |msg: Message| {
             let count = msg.as_text()?;
-
             my_total.set(count.parse::<u32>().unwrap());
-
             out.close(CloseCode::Normal)
         }
     })?;
@@ -71,6 +69,5 @@ fn get_case_count() -> Result<u32> {
 
 fn update_reports() -> Result<()> {
     let report_url = format!("ws://127.0.0.1:9001/updateReports?agent={}", AGENT);
-
     connect(report_url, |out| move |_| out.close(CloseCode::Normal))
 }

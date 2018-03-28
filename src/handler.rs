@@ -317,7 +317,7 @@ pub trait Handler {
 
 impl<F> Handler for F
 where
-    F: Fn(Message) -> Result<()>,
+    F: FnMut(Message) -> Result<()>,
 {
     fn on_message(&mut self, msg: Message) -> Result<()> {
         self(msg)

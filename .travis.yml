@@ -1,3 +1,4 @@
+sudo: required
 language: rust
 rust:
 - stable
@@ -8,10 +9,10 @@ matrix:
   - rust: beta
   - rust: nightly
 script:
-    - cargo build --all-features
-    - cargo test --all-features
-    - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly" ]] ; then cargo install clippy --force && cargo clippy -- -A doc_markdown -A cyclomatic_complexity -A collapsible_if ; fi'
-    - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly" ]] ; then cargo install rustfmt-nightly --force &&  cargo fmt --all -- --write-mode=diff ; fi'
+    # - cargo build --all-features
+    # - cargo test --all-features
+    # - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly" ]] ; then cargo install clippy --force && cargo clippy -- -A doc_markdown -A cyclomatic_complexity -A collapsible_if ; fi'
+    # - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly" ]] ; then cargo install rustfmt-nightly --force &&  cargo fmt --all -- --write-mode=diff ; fi'
 after_success: ./test_autobahn.sh -c && ./test_autobahn.sh -s
 notifications:
   email: true

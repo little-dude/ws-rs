@@ -1,4 +1,3 @@
-sudo: required
 language: rust
 rust:
 - stable
@@ -6,14 +5,19 @@ rust:
 - nightly
 matrix:
   allow_failures:
-  - rust: beta
   - rust: nightly
+before_script:
+    - export PATH=$HOME/.local/bin:$PATH
+    - pip install -r autobahntestsuite --user `whoami`
+    - composer --prefer-source install
 script:
+    - ./test_autobahn.sh -c
+    - ./test_autobahn.sh -s
     # - cargo build --all-features
     # - cargo test --all-features
     # - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly" ]] ; then cargo install clippy --force && cargo clippy -- -A doc_markdown -A cyclomatic_complexity -A collapsible_if ; fi'
     # - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "nightly" ]] ; then cargo install rustfmt-nightly --force &&  cargo fmt --all -- --write-mode=diff ; fi'
-after_success: ./test_autobahn.sh -c && ./test_autobahn.sh -s
+after_success:
 notifications:
   email: true
 env:

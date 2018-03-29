@@ -8,7 +8,7 @@ matrix:
   - rust: nightly
 before_script:
     - export PATH=$HOME/.local/bin:$PATH
-    - pip install -r autobahntestsuite --user `whoami`
+    - pip install autobahntestsuite --user `whoami`
     - composer --prefer-source install
 script:
     - ./test_autobahn.sh -c
